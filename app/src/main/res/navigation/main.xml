@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/listFragment">
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.example.nasaneo.features.list.ListFragment"
+        android:label="List"
+        tools:layout="@layout/list_fragment">
+        <action
+            android:id="@+id/action_listFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.nasaneo.features.details.DetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/details_fragment">
+        <argument
+            android:name="neo"
+            app:argType="com.example.nasaneo.data.model.Neo"
+            app:nullable="false" />
+    </fragment>
+
+</navigation>
