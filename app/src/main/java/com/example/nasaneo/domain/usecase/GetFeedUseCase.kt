@@ -10,6 +10,6 @@ class GetFeedUseCase @Inject constructor(
 ) {
     fun build(): Single<List<Neo>> =
         neoRepository.getFeed()
-            .map { it.nearEarthObjects.values.first() } // XXX
+            .map { it.nearEarthObjects.values.first() }
 
 }

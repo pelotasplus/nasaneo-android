@@ -8,5 +8,5 @@ class NeoRepository @Inject constructor(
     private val nasaNeoApi: NasaNeoApi
 ) {
     fun getFeed(): Single<Feed> =
-        nasaNeoApi.getFeed() // XXX
+        nasaNeoApi.getFeed()
 }

@@ -8,6 +8,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import com.example.nasaneo.di.AppModule.IO_SCHEDULER
 import com.example.nasaneo.di.AppModule.UI_SCHEDULER
+import com.example.nasaneo.domain.model.Event
 import com.example.nasaneo.domain.usecase.GetFeedUseCase
 import javax.inject.Inject
 import javax.inject.Named
@@ -20,7 +21,7 @@ class ListViewModel @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    val itemToOpen = MutableLiveData<ListItemState>()
+    val itemToOpen = MutableLiveData<Event<ListItemState>>()
     val viewState = MutableLiveData<ListViewState>()
 
     init {
@@ -45,7 +46,7 @@ class ListViewModel @Inject constructor(
     }
 
     fun onItemClicked(itemState: ListItemState) {
-        itemToOpen.value = itemState
+        itemToOpen.value = Event(itemState)
     }
 
     override fun onCleared() {

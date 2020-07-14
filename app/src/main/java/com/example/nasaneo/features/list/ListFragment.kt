@@ -34,8 +34,12 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.itemToOpen.observe(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let {
 //            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it.url)))
-            findNavController().navigate(ListFragmentDirections.actionListFragmentToDetailsFragment(it.neo))
+                findNavController().navigate(
+                    ListFragmentDirections.actionListFragmentToDetailsFragment(it.neo)
+                )
+            }
         }
     }
 
