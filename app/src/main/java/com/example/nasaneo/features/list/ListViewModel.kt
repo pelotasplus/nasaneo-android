@@ -21,7 +21,6 @@ class ListViewModel @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    val itemToOpen = MutableLiveData<Event<ListItemState>>()
     val viewState = MutableLiveData<ListViewState>()
 
     init {
@@ -46,7 +45,7 @@ class ListViewModel @Inject constructor(
     }
 
     fun onItemClicked(itemState: ListItemState) {
-        itemToOpen.value = Event(itemState)
+        // handle 'on click' logic here
     }
 
     override fun onCleared() {

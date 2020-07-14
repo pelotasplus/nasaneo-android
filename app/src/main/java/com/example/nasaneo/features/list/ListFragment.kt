@@ -29,18 +29,7 @@ class ListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.itemToOpen.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let {
-//            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it.url)))
-                findNavController().navigate(
-                    ListFragmentDirections.actionListFragmentToDetailsFragment(it.neo)
-                )
-            }
-        }
-    }
-
 }
+
+// startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(...)))
+// ListFragmentDirections.actionListFragmentToDetailsFragment(...)
