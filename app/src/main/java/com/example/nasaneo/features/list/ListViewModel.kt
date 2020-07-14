@@ -10,13 +10,13 @@ import com.example.nasaneo.di.AppModule.IO_SCHEDULER
 import com.example.nasaneo.di.AppModule.UI_SCHEDULER
 import com.example.nasaneo.domain.model.Event
 import com.example.nasaneo.domain.usecase.GetFeedUseCase
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
 class ListViewModel @Inject constructor(
-    getFeedUseCase: GetFeedUseCase,
-    @Named(IO_SCHEDULER) ioScheduler: Scheduler,
-    @Named(UI_SCHEDULER) uiScheduler: Scheduler
+    getFeedUseCase: GetFeedUseCase
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -35,8 +35,8 @@ class ListViewModel @Inject constructor(
                     )
                 }
             }
-            .subscribeOn(ioScheduler)
-            .observeOn(uiScheduler)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = {
                     viewState.value = ListViewState(items = it)
