@@ -1,8 +1,9 @@
 package com.example.nasaneo.features.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.nasaneo.data.NeoRepository
+import com.example.nasaneo.data.model.Feed
 import com.example.nasaneo.data.model.Neo
-import com.example.nasaneo.domain.usecase.GetFeedUseCase
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -17,14 +18,16 @@ class ListViewModelTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    private val getFeedUseCase = mock<GetFeedUseCase>()
+    private val neoRepository = mock<NeoRepository>()
     private val testScheduler = TestScheduler()
 
     @Test
     fun `should fetch items`() {
         val neo = Neo("id", "refid", "name", "url")
-        whenever(getFeedUseCase.build())
-            .thenReturn(Single.just(listOf(neo)))
+        whenever(neoRepository.getFeed())
+            .thenReturn(Single.just(Feed(
+                nearEarthObjects = mapOf("ffo" to listOf(neo))
+            )))
 
         val viewModel = createViewModel()
         testScheduler.triggerActions()
@@ -34,9 +37,5 @@ class ListViewModelTest {
     }
 
     private fun createViewModel() =
-        ListViewModel(
-            getFeedUseCase,
-            testScheduler,
-            testScheduler
-        )
+        ListViewModel(neoRepository)
 }
