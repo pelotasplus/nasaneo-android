@@ -1,15 +1,16 @@
 package com.example.nasaneo.features.list
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.Scheduler
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
 import com.example.nasaneo.di.AppModule.IO_SCHEDULER
 import com.example.nasaneo.di.AppModule.UI_SCHEDULER
 import com.example.nasaneo.domain.model.Event
 import com.example.nasaneo.domain.usecase.GetFeedUseCase
+import io.reactivex.Scheduler
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -21,7 +22,13 @@ class ListViewModel @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    val viewState = MutableLiveData<ListViewState>()
+    private val _viewState = MutableLiveData<ListViewState>()
+    val viewState: LiveData<ListViewState>
+        get() = _viewState
+
+    private val _currentState = MutableLiveData<Event<ListItemState>>()
+    val currentState: LiveData<Event<ListItemState>>
+        get() = _currentState
 
     init {
         getFeedUseCase.build()
@@ -38,14 +45,14 @@ class ListViewModel @Inject constructor(
             .observeOn(uiScheduler)
             .subscribeBy(
                 onSuccess = {
-                    viewState.value = ListViewState(items = it)
+                    _viewState.value = ListViewState(items = it)
                 }
             )
             .addTo(compositeDisposable)
     }
 
     fun onItemClicked(itemState: ListItemState) {
-        // handle 'on click' logic here
+        _currentState.value = Event(itemState)
     }
 
     override fun onCleared() {

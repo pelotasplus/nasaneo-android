@@ -29,7 +29,19 @@ class ListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.currentState.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                val actionListFragmentToDetailsFragment =
+                    ListFragmentDirections.actionListFragmentToDetailsFragment(it.neo)
+                findNavController().navigate(actionListFragmentToDetailsFragment)
+            }
+        }
+    }
 }
 
 // startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(...)))
-// ListFragmentDirections.actionListFragmentToDetailsFragment(...)
+//
