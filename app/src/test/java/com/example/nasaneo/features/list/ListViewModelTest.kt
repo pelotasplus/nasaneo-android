@@ -8,7 +8,6 @@ import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
-import io.reactivex.schedulers.TestScheduler
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
@@ -19,7 +18,6 @@ class ListViewModelTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     private val neoRepository = mock<NeoRepository>()
-    private val testScheduler = TestScheduler()
 
     @Test
     fun `should fetch items`() {
@@ -30,7 +28,6 @@ class ListViewModelTest {
             )))
 
         val viewModel = createViewModel()
-        testScheduler.triggerActions()
 
         assertThat(viewModel.viewState.value!!.items)
             .isEqualTo(listOf(ListItemState(neo = neo, name = "name", url = "url")))
