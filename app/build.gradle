@@ -17,7 +17,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "NASA_NEO_API_URL", '"https://api.nasa.gov/neo/rest/v1/"'
+        buildConfigField "String", "NASA_NEO_API_URL", '"https://api.nasa.gov/"'
     }
 
     buildTypes {
